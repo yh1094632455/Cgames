@@ -1,19 +1,20 @@
 #include "stdio.h"
+#include<stdlib.h>
 long int f(int year,int month)
-{/*f(Äê£¬ÔÂ)£½Äê£­1£¬ÈçÔÂ<3;·ñÔò£¬f(Äê£¬ÔÂ)£½Äê*/
+{/*f(å¹´ï¼Œæœˆ)ï¼å¹´ï¼1ï¼Œå¦‚æœˆ<3;å¦åˆ™ï¼Œf(å¹´ï¼Œæœˆ)ï¼å¹´*/
 	if(month<3) return year-1;
 	else return year;
 }
 
 long int g(int month)
-{/*g(ÔÂ)£½ÔÂ£«13£¬ÈçÔÂ<3;·ñÔò£¬g(ÔÂ)£½ÔÂ£«1*/
+{/*g(æœˆ)ï¼æœˆï¼‹13ï¼Œå¦‚æœˆ<3;å¦åˆ™ï¼Œg(æœˆ)ï¼æœˆï¼‹1*/
 	if(month<3) return month+13;
 	else return month+1;
 }
 
 long int n(int year,int month,int day)
 {
-  /*N=1461*f(Äê¡¢ÔÂ)/4+153*g(ÔÂ)/5+ÈÕ*/
+  /*N=1461*f(å¹´ã€æœˆ)/4+153*g(æœˆ)/5+æ—¥*/
 	return 1461L*f(year,month)/4+153L*g(month)/5+day;
 }
 
@@ -28,51 +29,51 @@ int day_tbl[ ][12]={{31,28,31,30,31,30,31,31,30,31,30,31},
 		    {31,29,31,30,31,30,31,31,30,31,30,31}};
 main()
 {int sw,leap,i,j,k,wd,day;
- int year;/*Äê*/
+ int year;/*å¹´*/
  char title[]="SUN MON TUE WED THU FRI SAT";
-clrscr();
-printf("Please input the year whose calendar you want to know: ");/*ÊäÈëÄê*/
-scanf("%d%*c",&year);/*ÊäÈëÄê·İÖµºÍÂÓ¹ıÖµºóµÄ»Ø³µ*/
+system("cls");
+printf("Please input the year whose calendar you want to know: ");/*è¾“å…¥å¹´*/
+scanf("%d%*c",&year);/*è¾“å…¥å¹´ä»½å€¼å’Œæ è¿‡å€¼åçš„å›è½¦*/
 sw=w(year,1,1);
-leap=year%4==0&&year%100||year%400==0;/*ÅĞÈòÄê*/
+leap=year%4==0&&year%100||year%400==0;/*åˆ¤é—°å¹´*/
 for(i=0;i<12;i++)
 	for(j=0;j<6;j++)
 		for(k=0;k<7;k++)
-			date[i][j][k]=0;/*ÈÕÆÚ±íÖÃ0*/
-for(i=0;i<12;i++)/*Ò»ÄêÊ®¶ş¸öÔÂ*/
+			date[i][j][k]=0;/*æ—¥æœŸè¡¨ç½®0*/
+for(i=0;i<12;i++)/*ä¸€å¹´åäºŒä¸ªæœˆ*/
 	for(wd=0,day=1;day<=day_tbl[leap][i];day++)
-	{/*½«µÚi£«1ÔÂµÄÈÕÆÚÌîÈëÈÕÆÚ±í*/
+	{/*å°†ç¬¬iï¼‹1æœˆçš„æ—¥æœŸå¡«å…¥æ—¥æœŸè¡¨*/
 	 date[i][wd][sw]=day;
-	sw=++sw%7;/*Ã¿ĞÇÆÚÆßÌì£¬ÒÔ0ÖÁ6¼ÆÊı*/
-	if(sw==0) wd++;/*ÈÕÆÚ±íÃ¿ÆßÌìÒ»ĞĞ£¬ĞÇÆÚÌì¿ªÊ¼ĞÂµÄÒ»ĞĞ*/
+	sw=++sw%7;/*æ¯æ˜ŸæœŸä¸ƒå¤©ï¼Œä»¥0è‡³6è®¡æ•°*/
+	if(sw==0) wd++;/*æ—¥æœŸè¡¨æ¯ä¸ƒå¤©ä¸€è¡Œï¼Œæ˜ŸæœŸå¤©å¼€å§‹æ–°çš„ä¸€è¡Œ*/
 	}
 
 	printf("\n|==================The Calendar of Year %d =====================|\n|",year);
 for(i=0;i<6;i++)
-{/*ÏÈ²âËãµÚi+1ÔÂºÍµÚi+7ÔÂµÄ×î´óĞÇÆÚÊı*/
-	for(wd=0,k=0;k<7;k++)/*ÈÕÆÚ±íµÄµÚÁùĞĞÓĞÈÕÆÚ£¬Ôòwd!=0*/
+{/*å…ˆæµ‹ç®—ç¬¬i+1æœˆå’Œç¬¬i+7æœˆçš„æœ€å¤§æ˜ŸæœŸæ•°*/
+	for(wd=0,k=0;k<7;k++)/*æ—¥æœŸè¡¨çš„ç¬¬å…­è¡Œæœ‰æ—¥æœŸï¼Œåˆ™wd!=0*/
 		wd+=date[i][5][k]+date[i+6][5][k];
 	wd=wd?6:5;
 	printf("%2d  %s  %2d  %s |\n|",i+1,title,i+7,title);
 	for(j=0;j<wd;j++)
 	{
-		printf("   ");/*Êä³öËÄ¸ö¿Õ°×·û*/
-		/*×óÀ¸ÎªµÚi+1ÔÂ£¬ÓÒÀ¸ÎªµÚi+7ÔÂ*/
+		printf("   ");/*è¾“å‡ºå››ä¸ªç©ºç™½ç¬¦*/
+		/*å·¦æ ä¸ºç¬¬i+1æœˆï¼Œå³æ ä¸ºç¬¬i+7æœˆ*/
 		for(k=0;k<7;k++)
 			if(date[i][j][k])
 				printf("%4d",date[i][j][k]);
 			else printf("    ");
-		printf("     ");/*Êä³öÊ®¸ö¿Õ°×·û*/
+		printf("     ");/*è¾“å‡ºåä¸ªç©ºç™½ç¬¦*/
 		for(k=0;k<7;k++)
 			if(date[i+6][j][k])
 				printf("%4d",date[i+6][j][k]);
 			else printf("    ");
 		printf(" |\n|");
 	}
-	/*scanf("%*c");/*¼üÈë»Ø³µÊä³öÏÂÒ»¸öÔÂµÄÈÕÀú*/
+	/*scanf("%*c");/*é”®å…¥å›è½¦è¾“å‡ºä¸‹ä¸€ä¸ªæœˆçš„æ—¥å†*/
  
 }
 puts("=================================================================|");
 puts("\n Press any key to quit...");
 getch();
-}
+}
